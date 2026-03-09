@@ -1,0 +1,54 @@
+name: Build Flutter Web and Deploy to docs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      #Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      #Устанавливаем Flutter
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.13.0" # укажи свою версию Flutter
+
+      #Получаем зависимости
+      - name: Get dependencies
+        run: flutter pub get
+
+      #Очищаем предыдущую сборку
+      - name: Clean previous build
+        run: flutter clean
+
+      #Собираем Flutter Web
+      - name: Build web
+        run: flutter build web
+
+      #Копируем кастомные файлы и сборку в docs
+      - name: Copy build to docs
+        run: |
+          rm -rf docs
+          mkdir docs
+          # Копируем всю сборку
+          cp -r build/web/* docs/
+          # Если нужно, копируем кастомные файлы поверх (иконки, manifest)
+          cp -r web/icons docs/icons
+          cp web/manifest.json docs/manifest.json
+          cp web/index.html docs/index.html
+
+      #Коммитим и пушим
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git add docs
+          git commit -m "Auto-update docs from Flutter web build" || echo "No changes to commit"
+          git push

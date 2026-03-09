@@ -410,9 +410,8 @@ class _IdeaGeneratorScreenState extends State<IdeaGeneratorScreen>
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 260),
               constraints: BoxConstraints(
-                maxHeight: isDropdownOpen
-                    ? MediaQuery.of(context).size.height * 0.3 : 0,
-              ),
+              maxHeight: isDropdownOpen ? 32 * 6.0 : 0, 
+             ),
               child: SingleChildScrollView(
                 child: Column(
                   children: ideasByCategory.keys.toList().asMap().entries.map((entry) {
