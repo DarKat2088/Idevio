@@ -411,8 +411,7 @@ class _IdeaGeneratorScreenState extends State<IdeaGeneratorScreen>
               duration: const Duration(milliseconds: 260),
               constraints: BoxConstraints(
                 maxHeight: isDropdownOpen
-                    ? MediaQuery.of(context).size.height * 0.6
-                    : 0,
+                    ? MediaQuery.of(context).size.height * 0.3 : 0,
               ),
               child: SingleChildScrollView(
                 child: Column(
@@ -448,14 +447,14 @@ class _IdeaGeneratorScreenState extends State<IdeaGeneratorScreen>
                           isDropdownOpen = false;
                         }),
                         child: Container(
-                          height: 36,
+                          height: 32,
                           alignment: Alignment.center,
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                           child: Text(
                             cat,
                             style: GoogleFonts.robotoMono(
                               color: textColor,
-                              fontSize: 17,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
